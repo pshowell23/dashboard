@@ -7,11 +7,15 @@ import (
 	"os"
 )
 
-// CheckoutStats prints message
+var circStats string = "data/2019_circ_stats.csv"
+
+// CheckoutStats prints circulation stats
 func CheckoutStats() {
-	circStats := "data/2019_circ_stats.csv"
-	fmt.Println("Checkout stats")
-	fmt.Println(readData(circStats))
+	fmt.Println(getCircStats())
+}
+
+func getCircStats() [][]string {
+	return readData(circStats)
 }
 
 func readData(fileLocation string) [][]string {
