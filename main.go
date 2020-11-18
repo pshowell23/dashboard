@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/csv"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -12,6 +13,7 @@ import (
 func main() {
 	circ.CheckoutStats()
 	rows := readSample()
+	fmt.Println(rows)
 	appendSum(rows)
 	writeChanges(rows)
 }
