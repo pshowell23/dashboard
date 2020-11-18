@@ -9,13 +9,27 @@ import (
 
 var circStats string = "data/2019_circ_stats.csv"
 
-// CheckoutStats prints circulation stats
-func CheckoutStats() {
-	fmt.Println(getCircStats())
+// CirculationStats prints circulation stats
+func CirculationStats(year int, month string) {
+	fmt.Println(getLocalCircStats(year, month))
 }
 
-func getCircStats() [][]string {
-	return readData(circStats)
+func getLocalCircStats(year int, month string) []string {
+	var circStatsFile string
+	var output []string
+	switch year {
+	case 2019:
+		circStatsFile = "data/2019_circ_stats.csv"
+	}
+	stats := readData(circStatsFile)
+
+	for i := 0; i < len(stats); i++ {
+		if stats[i][0] == month {
+			output = stats[i]
+		}
+	}
+
+	return output
 }
 
 func readData(fileLocation string) [][]string {

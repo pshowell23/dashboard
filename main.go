@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	circ.CheckoutStats()
+	circ.CirculationStats(2019, "March")
 }
