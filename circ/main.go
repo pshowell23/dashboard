@@ -7,8 +7,6 @@ import (
 	"strconv"
 )
 
-var circStats string = "data/2019_circ_stats.csv"
-
 // CirculationStats prints circulation stats
 func CirculationStats(year int, month string) {
 	stats := getLocalCircStats(year, month)
