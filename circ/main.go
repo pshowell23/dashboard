@@ -3,8 +3,8 @@ package circ
 import (
 	"encoding/csv"
 	"fmt"
-	"log"
 	"os"
+	"strconv"
 )
 
 var circStats string = "data/2019_circ_stats.csv"
@@ -17,14 +17,8 @@ func CirculationStats(year int, month string) {
 func getLocalCircStats(year int, month string) []string {
 	var circStatsFile string
 	var output []string
-	switch year {
-	case 2019:
-		circStatsFile = "data/2019_circ_stats.csv"
-	case 2020:
-		circStatsFile = "data/2020_circ_stats.csv"
-	default:
-		return []string{"No data for the requested year"}
-	}
+
+	circStatsFile = "data/" + strconv.Itoa(year) + "_circ_stats.csv"
 	stats := readData(circStatsFile)
 
 	for i := 0; i < len(stats); i++ {
@@ -44,7 +38,7 @@ func readData(fileLocation string) [][]string {
 	defer f.Close()
 
 	if err != nil {
-		log.Fatal(err)
+		return [][]string{{"No data available"}}
 	}
 
 	rows, _ := csv.NewReader(f).ReadAll()
