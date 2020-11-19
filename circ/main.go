@@ -20,6 +20,8 @@ func getLocalCircStats(year int, month string) []string {
 	switch year {
 	case 2019:
 		circStatsFile = "data/2019_circ_stats.csv"
+	default:
+		return []string{"No data for the requested year"}
 	}
 	stats := readData(circStatsFile)
 
