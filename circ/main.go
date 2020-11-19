@@ -11,7 +11,12 @@ var circStats string = "data/2019_circ_stats.csv"
 
 // CirculationStats prints circulation stats
 func CirculationStats(year int, month string) {
-	fmt.Println(getLocalCircStats(year, month))
+	stats := getLocalCircStats(year, month)
+	fmt.Println("For the month of", stats[0], year)
+	fmt.Println("Items Checked Out:", stats[1])
+	fmt.Println("Items Checked In:", stats[2])
+	fmt.Println("Items Renewed:", stats[3])
+	fmt.Println("Items Soft Checked Out:", stats[4])
 }
 
 func getLocalCircStats(year int, month string) []string {
