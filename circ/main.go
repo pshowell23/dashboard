@@ -3,18 +3,30 @@ package circ
 import (
 	"encoding/csv"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 )
 
 // CirculationStats prints circulation stats
 func CirculationStats(year int, month string) {
-	stats := getLocalCircStats(year, month)
-	fmt.Println("For the month of", stats[0], year)
-	fmt.Println("Items Checked Out:", stats[1])
-	fmt.Println("Items Checked In:", stats[2])
-	fmt.Println("Items Renewed:", stats[3])
-	fmt.Println("Items Soft Checked Out:", stats[4])
+	localCircStats := getLocalCircStats(year, month)
+	illBorrowStats := getILLBorrowStats(year, month)
+	if len(localCircStats) == 5 {
+		fmt.Println("For the month of", localCircStats[0], year)
+		fmt.Println("Items Checked Out:", localCircStats[1])
+		fmt.Println("Items Checked In:", localCircStats[2])
+		fmt.Println("Items Renewed:", localCircStats[3])
+		fmt.Println("Items Soft Checked Out:", localCircStats[4])
+	} else {
+		fmt.Println(localCircStats[0])
+	}
+	if len(illBorrowStats) == 3 {
+		fmt.Println("Borrowed Articles:", illBorrowStats[1][1])
+		fmt.Println("Borrowed Books:", illBorrowStats[2][1])
+	} else {
+		fmt.Println(illBorrowStats[0][0])
+	}
 }
 
 func getLocalCircStats(year int, month string) []string {
@@ -36,12 +48,25 @@ func getLocalCircStats(year int, month string) []string {
 	return output
 }
 
+func getILLBorrowStats(year int, month string) [][]string {
+	var illBorrowFile string
+
+	illBorrowFile = "data/" + strconv.Itoa(year) + "_" + month + "_ILL_borrow_requests.csv"
+
+	borrowStats := readData(illBorrowFile)
+
+	if borrowStats == nil {
+		log.Fatal("No Data")
+	}
+	return borrowStats
+}
+
 func readData(fileLocation string) [][]string {
 	f, err := os.Open(fileLocation)
 	defer f.Close()
 
 	if err != nil {
-		return [][]string{{"No data available"}}
+		return [][]string{{"No ILL data available"}}
 	}
 
 	rows, _ := csv.NewReader(f).ReadAll()
